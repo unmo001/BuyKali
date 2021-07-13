@@ -51,7 +51,7 @@ class Service(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural='サービス'
+        verbose_name_plural = 'サービス'
 
     def __str__(self):
         return self.title
@@ -88,6 +88,8 @@ class Message(models.Model):
     text = models.CharField(verbose_name='テキスト', max_length=250)
     published_at = models.DateTimeField(auto_now=True)
 
+    # ファイルの送信の仕方がわかりません
+
     class Meta:
         verbose_name_plural = "チャット"
 
@@ -102,6 +104,8 @@ class MessageRoom(models.Model):
     Buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
     purchase_review = models.IntegerField(verbose_name='購入実績', default=0, null=True, blank=True)
     exhibit_review = models.IntegerField(verbose_name='販売実績', default=0, null=True, blank=True)
+    # 実績系は★5段階で評価させます
+    fixed_phrase = models.CharField(verbose_name='定型文', max_length=250, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'チャットルーム'
