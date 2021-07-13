@@ -72,6 +72,7 @@ class Message(models.Model):
     text = models.CharField(verbose_name='テキスト', max_length=250)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     Buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
+    published_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "チャット"
@@ -79,9 +80,15 @@ class Message(models.Model):
     def __str__(self):
         return self.text
 
+
 class MessageRoom(models.Model):
-    Seller = models.ForeignKey(Seller,on_delete=models.CASCADE)
-    Buyer = models.ForeignKey(Buyer,on_delete=models.CASCADE)
-    published_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    service = models.ForeignKey(Service,on_delete=models.CASCADE)
+    Seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    Buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
+
+
+    class Meta:
+        verbose_name_plural = 'チャットルーム'
 
 
