@@ -58,33 +58,14 @@ class Service(models.Model):
 
 
 # 買い手
-class Buyer(models.Model):
-    buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = '購入者'
-
-    def __str__(self):
-        return self.buyer
-
 
 # 売り手
-class Seller(models.Model):
-    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = "出品者"
-
-    def __str__(self):
-        return self.seller
 
 
 # メッセージ
 class Message(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    Buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
     text = models.CharField(verbose_name='テキスト', max_length=250)
     published_at = models.DateTimeField(auto_now=True)
 
@@ -98,12 +79,11 @@ class Message(models.Model):
 
 
 class MessageRoom(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    Seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    Buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
-    purchase_review = models.IntegerField(verbose_name='購入実績', default=0, null=True, blank=True)
-    exhibit_review = models.IntegerField(verbose_name='販売実績', default=0, null=True, blank=True)
+    Seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    Buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    purchase_review = models.ForeignKey(Service,on_delete=models.CASCADE)
+    exhibit_review = models.ForeignKey(Service,on_delete=models.CASCADE)
     # 実績系は★5段階で評価させます
     fixed_phrase = models.CharField(verbose_name='定型文', max_length=250, null=True, blank=True)
 
