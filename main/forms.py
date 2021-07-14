@@ -1,5 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 
-from registration.models import CustomUser
+from registration.models import Message
 
+
+class MessageForm(forms.Form):
+    class Meta:
+        model = Message
+        fields = ('message',)
